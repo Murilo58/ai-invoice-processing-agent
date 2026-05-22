@@ -35,7 +35,7 @@ O fluxo realiza a leitura automática de anexos PDF recebidos por e-mail, extrai
 
 ### Workflow completo
 
-![Workflow](imagem/01-workflow-completo.png)
+![Workflow]https://github.com/Murilo58/ai-invoice-processing-agent/blob/main/imagem/01-workflow-completo.png
 
 ---
 
