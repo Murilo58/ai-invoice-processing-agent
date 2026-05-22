@@ -1,9 +1,8 @@
-Claro. Você pode substituir o conteúdo atual do seu `README.md` por este texto:
-
-```markdown
+```markdown id="e2zk0n"
 # Agente de Processamento de Faturas de IA
 
 ## Objetivo
+
 Automatizar o processamento de notas fiscais e faturas recebidas por e-mail utilizando Inteligência Artificial Generativa e automações com n8n.
 
 O fluxo realiza a leitura automática de anexos PDF recebidos por e-mail, extrai informações relevantes utilizando Google Gemini e registra os dados estruturados no Google Sheets, além de organizar os arquivos automaticamente no Google Drive.
@@ -32,30 +31,35 @@ O fluxo realiza a leitura automática de anexos PDF recebidos por e-mail, extrai
 
 ---
 
-## Estrutura do Workflow
+## Evidências
 
 ### Workflow completo
+
 ![Workflow](imagem/01-workflow-completo.png)
 
 ---
 
-### Organização automática no Google Drive
+### Execução concluída com sucesso
 
-#### Drive Corporativo
-![Drive Corporativo](imagem/02-drive-corporativo.png)
-
-#### Drive Pessoal
-![Drive Pessoal](imagem/03-drive-pessoal.png)
+![Execução](imagem/02-execucao-sucesso.png)
 
 ---
 
 ### Resultado estruturado no Google Sheets
-![Google Sheets](imagem/04-google-sheets-resultados.png)
+
+![Google Sheets](imagem/03-google-sheets-resultados.png)
 
 ---
 
-### Execução concluída com sucesso
-![Execução](imagem/05-execucao-sucesso.png)
+### Drive Pessoal
+
+![Drive Pessoal](imagem/04-drive-pessoal.png)
+
+---
+
+### Drive Corporativo
+
+![Drive Corporativo](imagem/05-drive-corporativo.png)
 
 ---
 
@@ -81,4 +85,3 @@ Este projeto foi desenvolvido com foco em:
 
 As credenciais e informações sensíveis foram removidas do workflow antes da publicação no GitHub.
 ```
-
