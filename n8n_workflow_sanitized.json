@@ -54,7 +54,7 @@
         -896,
         -272
       ],
-      "name": "If"
+      "name": "Has PDF Attachment?"
     },
     {
       "parameters": {
@@ -90,7 +90,7 @@
           "mode": "list",
           "cachedResultName": "models/gemini-2.5-flash"
         },
-        "text": "Você é um assistente de extração de dados.\n \nIMPORTANTE (regra crítica):\n- A resposta DEVE ser um JSON VÁLIDO, PURO, INICIANDO com { e TERMINANDO com }.\n- NÃO use ```json, NÃO use crases, NÃO use texto antes ou depois.\n- NÃO use quebras de linha fora do JSON.\n- NÃO use aspas extras envolvendo o JSON.\n- Se violar qualquer regra acima, a resposta será considerada inválida.\n \nTarefa:\nLeia o conteúdo do PDF (fatura ou recibo) fornecido e extraia os dados abaixo para preencher uma planilha.\n \nSe algum campo não existir no documento, retorne null.\n \nFormato do JSON (use EXATAMENTE essas chaves):\n{\n  \"data_fatura\": string | null,\n  \"fornecedor\": string | null,\n  \"valor\": number | null,\n  \"moeda\": string | null,\n  \"impostos\": number | null,\n  \"numero_fatura\": string | null,\n  \"categoria\": string | null,\n  \"tipo\": \"corporativo\" | \"pessoal\" | null,\n  \"metodo_pagamento\": string | null,\n  \"nome_sugerido_arquivo\": string\n}\n \nRegras de formatação:\n- Datas: YYYY-MM-DD\n- Valores numéricos: sem símbolo de moeda, usando ponto decimal\n- \"tipo\": use \"corporativo\" ou \"pessoal\" apenas\n- Não invente informações\n \nRegras para \"arquivo_sugerido\":\n- Formato: Data_Fornecedor_Valor.pdf\n- Fornecedor: sem acentos, sem caracteres especiais, espaços como \"_\"\n- Valor: 2 casas decimais, ponto substituído por \"-\"\n \nExemplo válido de resposta (apenas como referência de formato):\n{\"data_fatura\":\"2025-05-02\",\"fornecedor\":\"Empresa_X\",\"valor\":273.00,\"moeda\":\"BRL\",\"impostos\":13.00,\"numero_fatura\":\"ABC-123\",\"categoria\":\"Servicos\",\"tipo\":\"corporativo\",\"metodo_pagamento\":null,\"nome_sugerido_arquivo\":\"2025-05-02_Empresa_X_273-00.pdf\"}\n \n## Para análise de nota corporativa ou pessoal:\n \n1. REGRA DE OURO (CLIENTE): Procure no texto se há menção ao cliente \"Mgc Consulting\". Se a fatura foi emitida para esta empresa, a categoria é OBRIGATORIAMENTE \"Corporativo\".\n2. ANÁLISE DE CONTEXTO: Se não houver nome de cliente explícito, analise o item comprado: - Se for serviço de streaming (ex: Netflix), delivery de comida (ex: iFood), transporte individual (ex: Uber) ou apps de uso geral, classifique como \"Pessoal\". - Se for serviço empresarial (ex: Marketing, TI, Consultoria, Material de Escritório), classifique como \"Corporativo\".\n \nAgora gere a resposta FINAL obedecendo rigorosamente todas as regras acima.\n",
+        "text": "Você é um assistente de extração de dados.\n \nIMPORTANTE (regra crítica):\n- A resposta DEVE ser um JSON VÁLIDO, PURO, INICIANDO com { e TERMINANDO com }.\n- NÃO use ```json, NÃO use crases, NÃO use texto antes ou depois.\n- NÃO use quebras de linha fora do JSON.\n- NÃO use aspas extras envolvendo o JSON.\n- Se violar qualquer regra acima, a resposta será considerada inválida.\n \nTarefa:\nLeia o conteúdo do PDF (fatura ou recibo) fornecido e extraia os dados abaixo para preencher uma planilha.\n \nSe algum campo não existir no documento, retorne null.\n \nFormato do JSON (use EXATAMENTE essas chaves):\n{\n  \"data_fatura\": string | null,\n  \"fornecedor\": string | null,\n  \"valor\": number | null,\n  \"moeda\": string | null,\n  \"impostos\": number | null,\n  \"numero_fatura\": string | null,\n  \"categoria\": string | null,\n  \"tipo\": \"corporativo\" | \"pessoal\" | null,\n  \"metodo_pagamento\": string | null,\n  \"nome_sugerido_arquivo\": string\n}\n \nRegras de formatação:\n- Datas: YYYY-MM-DD\n- Valores numéricos: sem símbolo de moeda, usando ponto decimal\n- \"tipo\": use \"corporativo\" ou \"pessoal\" apenas\n- Não invente informações\n \nRegras para \"arquivo_sugerido\":\n- Formato: Data_Fornecedor_Valor.pdf\n- Fornecedor: sem acentos, sem caracteres especiais, espaços como \"_\"\n- Valor: 2 casas decimais, ponto substituído por \"-\"\n \nExemplo válido de resposta (apenas como referência de formato):\n{\"data_fatura\":\"2025-05-02\",\"fornecedor\":\"Empresa_X\",\"valor\":273.00,\"moeda\":\"BRL\",\"impostos\":13.00,\"numero_fatura\":\"ABC-123\",\"categoria\":\"Servicos\",\"tipo\":\"corporativo\",\"metodo_pagamento\":null,\"nome_sugerido_arquivo\":\"2025-05-02_Empresa_X_273-00.pdf\"}\n \n## Para definir o campo \"tipo\" (corporativo ou pessoal):\n \n1. REGRA DO CLIENTE: Procure no texto se há menção ao nome da sua empresa como cliente/destinatário da fatura (substitua \"[NOME_DA_SUA_EMPRESA]\" abaixo pelo nome real da sua empresa antes de usar este template). Se a fatura foi emitida para \"[NOME_DA_SUA_EMPRESA]\", defina \"tipo\" como \"corporativo\".\n2. ANÁLISE DE CONTEXTO: Se não houver nome de cliente explícito, analise o item comprado: - Se for serviço de streaming (ex: Netflix), delivery de comida (ex: iFood), transporte individual (ex: Uber) ou apps de uso geral, defina \"tipo\" como \"pessoal\". - Se for serviço empresarial (ex: Marketing, TI, Consultoria, Material de Escritório), defina \"tipo\" como \"corporativo\".\n \nIMPORTANTE: o campo \"categoria\" deve sempre representar a categoria da despesa (ex: \"Serviços\", \"Alimentação\", \"Transporte\"), independentemente do valor de \"tipo\". Nunca defina \"categoria\" como \"Corporativo\" ou \"Pessoal\".\n \nAgora gere a resposta FINAL obedecendo rigorosamente todas as regras acima.\n",
         "inputType": "binary",
         "binaryPropertyName": "={{ Object.keys($binary)[0] }}",
         "options": {}
@@ -135,8 +135,8 @@
           },
           "conditions": [
             {
-              "leftValue": "={{ $json.content.parts[0].text.categoria }}",
-              "rightValue": "Corporativo",
+              "leftValue": "={{ $json.content.parts[0].text.tipo }}",
+              "rightValue": "corporativo",
               "operator": {
                 "type": "string",
                 "operation": "equals"
@@ -153,7 +153,7 @@
         -32,
         -16
       ],
-      "name": "If1"
+      "name": "Is Corporate Invoice?"
     },
     {
       "parameters": {
@@ -167,7 +167,7 @@
         -80,
         -288
       ],
-      "name": "Merge"
+      "name": "Merge Corporate File + Metadata"
     },
     {
       "parameters": {
@@ -191,7 +191,7 @@
         160,
         -288
       ],
-      "name": "Upload file"
+      "name": "Upload to Corporate Drive"
     },
     {
       "parameters": {
@@ -205,7 +205,7 @@
         240,
         16
       ],
-      "name": "Merge1"
+      "name": "Merge Personal File + Metadata"
     },
     {
       "parameters": {
@@ -229,7 +229,7 @@
         496,
         16
       ],
-      "name": "Upload file1"
+      "name": "Upload to Personal Drive"
     },
     {
       "parameters": {
@@ -364,6 +364,104 @@
         -288
       ],
       "name": "Append row in sheet"
+    },
+    {
+      "parameters": {
+        "content": "## Workflow Overview\nThis workflow:\n- Monitors Gmail for incoming PDF invoices\n- Extracts structured invoice data using Google Gemini\n- Classifies invoices as corporate or personal\n- Uploads them to separate Google Drive destinations\n- Records extracted metadata in Google Sheets",
+        "height": 240,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1150,
+        -560
+      ],
+      "name": "Note: Workflow Overview"
+    },
+    {
+      "parameters": {
+        "content": "## Required Credentials\nAfter importing, configure:\n- Gmail OAuth2\n- Google Gemini\n- Google Drive OAuth2\n- Google Sheets OAuth2\n\nNo credentials are distributed with this template.",
+        "height": 240,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -810,
+        -560
+      ],
+      "name": "Note: Required Credentials"
+    },
+    {
+      "parameters": {
+        "content": "## Gmail Configuration\nSelect/connect the Gmail account to be monitored for incoming invoices in the \"Gmail Trigger\" node.",
+        "height": 240,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -470,
+        -560
+      ],
+      "name": "Note: Gmail Configuration"
+    },
+    {
+      "parameters": {
+        "content": "## Gemini Configuration\n- Configure the Google Gemini credential on the \"Analyze document\" node.\n- Replace [NOME_DA_SUA_EMPRESA] in the prompt with your actual company name before activating the workflow.",
+        "height": 240,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -130,
+        -560
+      ],
+      "name": "Note: Gemini Configuration"
+    },
+    {
+      "parameters": {
+        "content": "## Corporate Drive Destination\nConfigure the \"Upload to Corporate Drive\" node with the Drive/folder where corporate invoices should be stored.",
+        "height": 240,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        210,
+        -560
+      ],
+      "name": "Note: Corporate Drive Destination"
+    },
+    {
+      "parameters": {
+        "content": "## Personal Drive Destination\nConfigure the \"Upload to Personal Drive\" node with the Drive/folder where personal invoices should be stored.",
+        "height": 240,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        550,
+        -560
+      ],
+      "name": "Note: Personal Drive Destination"
+    },
+    {
+      "parameters": {
+        "content": "## Google Sheets Configuration\nSelect your own spreadsheet and worksheet in the \"Append row in sheet\" node.",
+        "height": 240,
+        "width": 300
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        890,
+        -560
+      ],
+      "name": "Note: Google Sheets Configuration"
     }
   ],
   "pinData": {},
@@ -372,14 +470,14 @@
       "main": [
         [
           {
-            "node": "If",
+            "node": "Has PDF Attachment?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If": {
+    "Has PDF Attachment?": {
       "main": [
         [
           {
@@ -411,12 +509,12 @@
             "index": 0
           },
           {
-            "node": "Merge",
+            "node": "Merge Corporate File + Metadata",
             "type": "main",
             "index": 1
           },
           {
-            "node": "Merge1",
+            "node": "Merge Personal File + Metadata",
             "type": "main",
             "index": 1
           }
@@ -438,54 +536,54 @@
       "main": [
         [
           {
-            "node": "If1",
+            "node": "Is Corporate Invoice?",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If1": {
+    "Is Corporate Invoice?": {
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Merge Corporate File + Metadata",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Merge1",
+            "node": "Merge Personal File + Metadata",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Merge": {
+    "Merge Corporate File + Metadata": {
       "main": [
         [
           {
-            "node": "Upload file",
+            "node": "Upload to Corporate Drive",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Merge1": {
+    "Merge Personal File + Metadata": {
       "main": [
         [
           {
-            "node": "Upload file1",
+            "node": "Upload to Personal Drive",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Upload file": {
+    "Upload to Corporate Drive": {
       "main": [
         [
           {
@@ -496,7 +594,7 @@
         ]
       ]
     },
-    "Upload file1": {
+    "Upload to Personal Drive": {
       "main": [
         [
           {
