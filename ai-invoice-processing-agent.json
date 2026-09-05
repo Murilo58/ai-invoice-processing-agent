@@ -1,5 +1,5 @@
 {
-  "name": "Captura de Notas Fiscais e Gravação no Google Drive",
+  "name": "Agente de Processamento de Faturas de IA",
   "nodes": [
     {
       "parameters": {
@@ -19,10 +19,11 @@
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.4,
       "position": [
-        -1072,
-        -96
+        80,
+        464
       ],
-      "name": "Gmail Trigger"
+      "name": "Gmail Trigger",
+      "id": "ea533bc4-404f-425a-af97-03cb625b2aeb"
     },
     {
       "parameters": {
@@ -51,10 +52,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -896,
-        -272
+        256,
+        288
       ],
-      "name": "Has PDF Attachment?"
+      "name": "Has PDF Attachment?",
+      "id": "9e1672fc-b2b6-4b91-985c-ed39025a0e4c"
     },
     {
       "parameters": {
@@ -64,10 +66,11 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        -720,
-        -96
+        432,
+        464
       ],
-      "name": "Split Out"
+      "name": "Split Out",
+      "id": "864c6cb5-3019-4f96-8004-40dfc95c8f60"
     },
     {
       "parameters": {
@@ -76,10 +79,11 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -528,
-        -256
+        624,
+        304
       ],
-      "name": "Loop Over Items"
+      "name": "Loop Over Items",
+      "id": "be1dbfc0-d2f2-4a2b-be8e-b9a3abcd7601"
     },
     {
       "parameters": {
@@ -98,10 +102,11 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.2,
       "position": [
-        -496,
-        -16
+        656,
+        544
       ],
-      "name": "Analyze document"
+      "name": "Analyze document",
+      "id": "4ac1d650-a855-4031-985c-916ef1af75df"
     },
     {
       "parameters": {
@@ -119,10 +124,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -288,
-        -16
+        864,
+        544
       ],
-      "name": "Edit Fields"
+      "name": "Edit Fields",
+      "id": "503cf6a6-49e1-4ec0-b0bd-8d0e3866946e"
     },
     {
       "parameters": {
@@ -150,10 +156,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -32,
-        -16
+        1120,
+        544
       ],
-      "name": "Is Corporate Invoice?"
+      "name": "Is Corporate Invoice?",
+      "id": "e9e19da2-c96c-497e-9b37-2775e1033003"
     },
     {
       "parameters": {
@@ -164,10 +171,11 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -80,
-        -288
+        1072,
+        272
       ],
-      "name": "Merge Corporate File + Metadata"
+      "name": "Merge Corporate File + Metadata",
+      "id": "d063922e-e343-4165-8507-5947f68cd6fe"
     },
     {
       "parameters": {
@@ -188,10 +196,11 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        160,
-        -288
+        1312,
+        272
       ],
-      "name": "Upload to Corporate Drive"
+      "name": "Upload to Corporate Drive",
+      "id": "b2f17943-fda4-4cc1-90c5-4cf899999818"
     },
     {
       "parameters": {
@@ -202,10 +211,11 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        240,
-        16
+        1392,
+        576
       ],
-      "name": "Merge Personal File + Metadata"
+      "name": "Merge Personal File + Metadata",
+      "id": "6e64a023-87a0-4ae7-ba21-5c34a0d37821"
     },
     {
       "parameters": {
@@ -226,10 +236,11 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        496,
-        16
+        1648,
+        576
       ],
-      "name": "Upload to Personal Drive"
+      "name": "Upload to Personal Drive",
+      "id": "2714ba92-d5b7-4aa4-aa48-ae9ac5f8a184"
     },
     {
       "parameters": {
@@ -360,108 +371,116 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        480,
-        -288
+        1632,
+        272
       ],
-      "name": "Append row in sheet"
+      "name": "Append row in sheet",
+      "id": "3eff762b-b463-4bdd-8b06-b45e00d020c1"
     },
     {
       "parameters": {
         "content": "## Workflow Overview\nThis workflow:\n- Monitors Gmail for incoming PDF invoices\n- Extracts structured invoice data using Google Gemini\n- Classifies invoices as corporate or personal\n- Uploads them to separate Google Drive destinations\n- Records extracted metadata in Google Sheets",
-        "height": 240,
-        "width": 300
+        "height": 280,
+        "width": 340
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1150,
-        -560
+        0,
+        -20
       ],
-      "name": "Note: Workflow Overview"
+      "name": "Note: Workflow Overview",
+      "id": "9d4af4e5-c0fa-47b2-a8d7-6f69b5477188"
     },
     {
       "parameters": {
         "content": "## Required Credentials\nAfter importing, configure:\n- Gmail OAuth2\n- Google Gemini\n- Google Drive OAuth2\n- Google Sheets OAuth2\n\nNo credentials are distributed with this template.",
-        "height": 240,
-        "width": 300
+        "height": 280,
+        "width": 340
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -810,
-        -560
+        380,
+        -20
       ],
-      "name": "Note: Required Credentials"
+      "name": "Note: Required Credentials",
+      "id": "457055c1-84a4-46fe-8fda-0e1ec0f32ba6"
     },
     {
       "parameters": {
         "content": "## Gmail Configuration\nSelect/connect the Gmail account to be monitored for incoming invoices in the \"Gmail Trigger\" node.",
-        "height": 240,
-        "width": 300
+        "height": 220,
+        "width": 320
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -470,
-        -560
+        760,
+        40
       ],
-      "name": "Note: Gmail Configuration"
+      "name": "Note: Gmail Configuration",
+      "id": "743bd908-071b-4e45-ae25-bbf613b9bfe7"
     },
     {
       "parameters": {
         "content": "## Gemini Configuration\n- Configure the Google Gemini credential on the \"Analyze document\" node.\n- Replace [NOME_DA_SUA_EMPRESA] in the prompt with your actual company name before activating the workflow.",
-        "height": 240,
-        "width": 300
+        "height": 280,
+        "width": 360
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -130,
-        -560
+        1120,
+        -20
       ],
-      "name": "Note: Gemini Configuration"
+      "name": "Note: Gemini Configuration",
+      "id": "17660591-bc53-474f-b302-5b040865bd09"
     },
     {
       "parameters": {
         "content": "## Corporate Drive Destination\nConfigure the \"Upload to Corporate Drive\" node with the Drive/folder where corporate invoices should be stored.",
-        "height": 240,
-        "width": 300
+        "height": 220,
+        "width": 320
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        210,
-        -560
+        1520,
+        40
       ],
-      "name": "Note: Corporate Drive Destination"
+      "name": "Note: Corporate Drive Destination",
+      "id": "4539aded-8362-4f36-97ad-13f9345e9536"
     },
     {
       "parameters": {
         "content": "## Personal Drive Destination\nConfigure the \"Upload to Personal Drive\" node with the Drive/folder where personal invoices should be stored.",
-        "height": 240,
-        "width": 300
+        "height": 220,
+        "width": 320
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        550,
-        -560
+        1880,
+        40
       ],
-      "name": "Note: Personal Drive Destination"
+      "name": "Note: Personal Drive Destination",
+      "id": "6eaf6766-abc5-4299-b78b-053252b9a78c"
     },
     {
       "parameters": {
         "content": "## Google Sheets Configuration\nSelect your own spreadsheet and worksheet in the \"Append row in sheet\" node.",
-        "height": 240,
-        "width": 300
+        "height": 200,
+        "width": 320
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        890,
-        -560
+        2240,
+        60
       ],
-      "name": "Note: Google Sheets Configuration"
+      "name": "Note: Google Sheets Configuration",
+      "id": "495f7ca6-7ad7-468d-86ac-1ae552884d87"
     }
   ],
   "pinData": {},
@@ -621,9 +640,6 @@
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate"
-  },
-  "meta": {
-    "templateCredsSetupCompleted": true
   },
   "tags": []
 }

@@ -64,7 +64,7 @@ Credentials are NOT included in the template. Each user must configure their own
 ## Installation
 
 1. Download or clone the repository.
-2. Import `n8n_workflow_sanitized.json` into n8n.
+2. Import `ai-invoice-processing-agent.json` into n8n.
 3. Configure all required credentials.
 4. Configure Gmail Trigger.
 5. Replace `[NOME_DA_SUA_EMPRESA]` in the Gemini prompt.
@@ -172,13 +172,10 @@ This workflow can be adapted to different needs, including:
 ```
 .
 ├── README.md
-├── n8n_workflow_sanitized.json
+├── ai-invoice-processing-agent.json
 └── imagem/
     ├── 01-workflow-completo.png
-    ├── 02-execucao-sucesso.png
-    ├── 03-google-sheets-resultados.png
-    ├── 04-drive-pessoal.png
-    └── 05-drive-corporativo.png
+    └── 02-execucao-sucesso.png
 ```
 
 ## Evidence
@@ -188,15 +185,6 @@ This workflow can be adapted to different needs, including:
 
 ### Successful execution
 ![Execution](imagem/02-execucao-sucesso.png)
-
-### Google Sheets result
-![Sheets](imagem/03-google-sheets-resultados.png)
-
-### Personal Drive
-![Personal Drive](imagem/04-drive-pessoal.png)
-
-### Corporate Drive
-![Corporate Drive](imagem/05-drive-corporativo.png)
 
 ## License
 
